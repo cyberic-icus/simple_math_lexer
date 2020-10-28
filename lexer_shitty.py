@@ -32,6 +32,7 @@ def div(a,b):
 	if b != 0: return a / b
 	else: return None
 
+
 def sqrt(a): return math.sqrt(a)
 def sin(a): return math.sin(a)
 def cos(a): return math.cos(a)
@@ -139,8 +140,8 @@ def lex(exp):
 if __name__ == '__main__':
 	print("Доступные операции:")
 	for item in info.items():
-		print(item[0], item[1])
-	expression = str(input(">>>"))	
+		print(' ',item[0], item[1])
+	expression = str(input(">>> "))	
 	result = lex(expression)
 	print(f"{expression} = {result}")
 	input("Нажмите любую кнопку для выхода.")
