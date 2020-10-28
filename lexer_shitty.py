@@ -1,17 +1,27 @@
 # -*- coding: utf-8 -*-
 """
-Программа представляет собой простой калькулятор.
-									Она состоит из 2 частей:
-1) Упрощение исходного выражения в более простой вид.						| 2) Вычисление значения преобразованного математического выражения.
-	В этой части функция lex преобразует входное выражение в удобную для работы		|	  Для вычисления значения используется алгоритм, похожий на алгоритм рекурсивного спуска.
-строку, которую потом примет в качестве аргумента функция analize. 				|
 
-Реализация алгоритма вычисления выражения отличается от стандартного алгоритма рекурсивного спуска. Доку допишу завтра.
-
+Программа состоит из 2 основных функций: lex и analize.
 
 """
 import math
-import sys
+
+info = {
+	'+':': Сложение.',
+	'-':': Вычитание.',
+	'*':': Умножение.',
+	'/':': Деление.',
+
+	'cos(<выражение>)':':  Косинус.',
+	'sin(<выражение>)':': Синус.',
+	'tg(<выражение>)':': Тангенс.',
+	'ctg(<выражение>)':': Котангенс.',
+
+	'Число pi':f': {math.pi}',
+	'Число e':f': {math.pi}',
+
+
+}
 
 
 
@@ -22,34 +32,26 @@ def div(a,b):
 	if b != 0: return a / b
 	else: return None
 
-def cos(a): return math.cos(a)
+
+def sqrt(a): return math.sqrt(a)
 def sin(a): return math.sin(a)
+def cos(a): return math.cos(a)
 def tg(a): return math.tan(a)
 def ctg(a): return math.atan(a)
 
 
-def lex(exp):
-	"""
-	Лексический анализатор математических выражений. Принимает строку-мат. выражение как входные данные
-	и считает его значение
-
-	Input: str 
-	Output: float
-
-	Самый дебильный алгоритм рекурсивного спуска: значения из скобок вручную вставляются в выражение. 
-	Однако эта херня работает.
-
-	"""
-	def analize(exp):
+def analize(exp):
 		"""
-		Фактический анализатор простых математических выражений
+		Парсер бинарных операций. Принимает обработанную строку из функции lex и выдает значение.
 
 		Input: str 
 		Output: float
-
 		Input: 2*2-4/2-1
 		2*2-4/2-1= sub(2*2-4/2, 1) = sub(sub(2*2,4/2), 1) = sub(sub(mul(2,2),div(4,2)), 1) ---переписать надо бы
 		Output: 1.0
+
+		Здесь реализован(не совсем правильно)) алгоритм рекурсивного спуска.
+
 		"""
 
 		# Именно данная последовательность нахождения мат. операторов
@@ -64,18 +66,22 @@ def lex(exp):
 			if sum_index >-1: return sum(lex(exp[:sum_index]), lex(exp[sum_index+1:]))
 			
 			sub_index = exp.find('-')
-			if sub_index >-1: return sub(lex(exp[:sub_index]), lex(exp[sub_index+1:]) )
+			if sub_index >-1: return sub(lex(exp[:sub_index]), lex(exp[sub_index+1:]))
 
 			mul_index = exp.find('*')
-			if mul_index >-1: return mul(lex(exp[:mul_index]), lex(exp[mul_index+1:]) )
+			if mul_index >-1: return mul(lex(exp[:mul_index]), lex(exp[mul_index+1:]))
 
 			div_index = exp.find('/')
-			if div_index >-1: return div(lex(exp[:div_index]), lex(exp[div_index+1:]) )
+			if div_index >-1: return div(lex(exp[:div_index]), lex(exp[div_index+1:]))
 
 			# ===================================================================== #
-			# Реализация рекурсивного спуска для функций 
+			# Реализация рекурсивного спуска для функций
+
+			sqrt_index = exp.find('^')
+			if sqrt_index >-1: return sqrt(lex(exp[sqrt_index+1:len(exp)]))
+
 			sin_index = exp.find('#')
-			if sin_index >-1: return sin(lex(str(exp[sin_index+1:len(exp)])))
+			if sin_index >-1: return sin(lex(exp[sin_index+1:len(exp)]))
 
 			cos_index = exp.find('$')
 			if cos_index >-1: return cos(lex(exp[cos_index+1:len(exp)]))
@@ -93,12 +99,21 @@ def lex(exp):
 		except Exception as e:
 			pass
 
+def lex(exp):
+	"""
+	Функция преобразования выражения. Заменяет слова функций на символы для удобства работы,
+	преобразует в выражение без скобок, с готовыми для работы данными.
 
+	Input: str 
+	Output: float
 
+	"""
+	# Для наглядности.
 	exp = exp.replace('sin', '#')
 	exp = exp.replace('cos', '$')
 	exp = exp.replace('tg', '@')
 	exp = exp.replace('ctg', '!')
+	exp = exp.replace('sqrt', '^')
 
 	exp = exp.replace('pi', f'{math.pi}')
 	exp = exp.replace('e', f'{math.e}')
@@ -115,7 +130,6 @@ def lex(exp):
 					braced_exp = exp[braces_indexes[0]+1:braces_indexes[1]]
 					exp = exp[:braces_indexes[0]] + str(analize(braced_exp)) + exp[braces_indexes[1]+1:] # Склеиваем
 					
-			
 			return analize(exp)
 
 		except Exception as e:
@@ -124,8 +138,10 @@ def lex(exp):
 
 
 if __name__ == '__main__':
-	print("Доступные операции: +,-,*,/.")
-	expression = sys.argv[1] or str(input()) # Можно сделать переменное число аргументов
+	print("Доступные операции:")
+	for item in info.items():
+		print(item[0], item[1])
+	expression = str(input(">>>"))	
 	result = lex(expression)
 	print(f"{expression} = {result}")
-
+	input("Нажмите любую кнопку для выхода.")
