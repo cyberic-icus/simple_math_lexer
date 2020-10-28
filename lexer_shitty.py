@@ -32,7 +32,6 @@ def div(a,b):
 	if b != 0: return a / b
 	else: return None
 
-
 def sqrt(a): return math.sqrt(a)
 def sin(a): return math.sin(a)
 def cos(a): return math.cos(a)
