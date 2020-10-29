@@ -63,7 +63,7 @@ def calculate(exp):
 
 if __name__ == '__main__':
 	print("Доступные операции:")
-	for item in info.items():
+	for item in functions.info.items():
 		print(' ',item[0], item[1])
 	expression = str(input('>>> '))
 	result = calculate(expression)
