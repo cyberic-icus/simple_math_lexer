@@ -5,43 +5,6 @@
 """
 import math
 
-binary_operators = {
-	'+' : sum,
-	'-' : sub,
-	'*' : mul,
-	'/' : div,
-}
-actions_dict = {
-	'#' : sin,
-	'$' : cos,
-	'@' : tg,
-	'!' : ctg,
-	'a' : ceil,
-	'b' : fabs,
-	'c' : factorial,
-	'd' : floor,
-	'e' : trunc,
-	'f' : exp,
-	'g' : expm1,
-	'h' : log1p,
-	'i' : log10,
-	'j' : log2,
-	'k' : sqrt,
-	'l' : acos,
-	'm' : asin,
-	'n' : atan,
-	'o' : degrees,
-	'p' : radians,
-	'q' : cosh,
-	'r' : sinh,
-	's' : tanh,
-	't' : acosh,
-	'u' : asinh,
-	'v' : atanh,
-	'y' : gamma,
-	'z' : lgamma,
-}
-
 info = {
 	'+':': Сложение.',
 	'-':': Вычитание.',
@@ -113,6 +76,43 @@ def asinh(a): return math.asinh(a)
 def atanh(a): return math.atanh(a)
 def gamma(a): return math.gamma(a)
 def lgamma(a): return math.lgamma(a)
+
+binary_operators = {
+	'+' : sum,
+	'-' : sub,
+	'*' : mul,
+	'/' : div,
+}
+actions_dict = {
+	'#' : sin,
+	'$' : cos,
+	'@' : tg,
+	'!' : ctg,
+	'a' : ceil,
+	'b' : fabs,
+	'c' : factorial,
+	'd' : floor,
+	'e' : trunc,
+	'f' : exp,
+	'g' : expm1,
+	'h' : log1p,
+	'i' : log10,
+	'j' : log2,
+	'k' : sqrt,
+	'l' : acos,
+	'm' : asin,
+	'n' : atan,
+	'o' : degrees,
+	'p' : radians,
+	'q' : cosh,
+	'r' : sinh,
+	's' : tanh,
+	't' : acosh,
+	'u' : asinh,
+	'v' : atanh,
+	'y' : gamma,
+	'z' : lgamma,
+}
 
 def replacer(exp):
 	"""
