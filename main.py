@@ -57,13 +57,12 @@ def recursive_descent(exp):
 
 		# ===================================================================== #
 		# Реализация рекурсивного спуска для функций
+		
 		for func_symbol, function in functions.actions_dict.items():
-			if exp.find(func_symbol) > -1:
-				return function(calculate(exp[exp.find(func_symbol)+1:len(exp)]))
+			if exp.find(func_symbol) > -1: return function(calculate(exp[exp.find(func_symbol)+1:len(exp)]))
 
 		if type(float(exp)) is float or type(exp) is int: 
 					return str(exp)
-
 	except Exception as e:
 		pass
 
@@ -91,7 +90,6 @@ def calculate(exp):
 					exp = exp[:braces_indexes[0]] + str(recursive_descent(braced_exp)) + exp[braces_indexes[1]+1:] # Склеиваем
 					
 			return recursive_descent(exp)
-
 		except Exception as e:
 			pass # Выдает вполне логичный результат при эксепшене
 
