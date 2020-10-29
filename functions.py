@@ -94,28 +94,3 @@ def replacer(exp):
 		exp = exp.replace(f'{function.__name__}', f'{symbol}', )
 		
 	return exp
-
-
-
-def recursive_descent(exp):
-	"""
-	"""
-	try:
-		# ===================================================================== #
-		# Реализация рекурсивного спуска для бинарных операторов 
-		for operator, function in binary_operators.items():
-			if exp.find(operator) > -1: return function(lex(exp[:exp.find(operator)]), lex(exp[exp.find(operator)+1:]))
-
-		# ===================================================================== #
-		# Реализация рекурсивного спуска для функций
-		for func_symbol, function in actions_dict.items():
-			if exp.find(func_symbol) > -1:
-				return function(lex(exp[exp.find(func_symbol)+1:len(exp)]))
-
-
-	except Exception as e:
-		print(e)
-		pass
-
-
-
