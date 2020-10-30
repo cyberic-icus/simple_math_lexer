@@ -19,7 +19,7 @@ def recursive_descent(exp):
 		# Реализация рекурсивного спуска для бинарных операторов 
 
 		for operator, function in functions.binary_operators.items():
-			if exp.find(operator) > -1: return function(calculate(exp[:exp.find(operator)]), calculate(exp[exp.find(operator)+1:]))
+			if exp.find(operator) > -1: return function(calculate(exp[:exp.rfind(operator)]), calculate(exp[exp.rfind(operator)+1:]))
 
 		# ===================================================================== #
 		# Реализация рекурсивного спуска для функций
